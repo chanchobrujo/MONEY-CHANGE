@@ -29,6 +29,7 @@ class ChangeMoneyService {
     private ChangeMoneyRequest request;
     private final MoneyRepository moneyRepository;
     private final RelationsRepository relationsRepository;
+    private final AuditoryRegisterService service;
 
     private Money getMoney(String value) {
         return this.moneyRepository
@@ -37,6 +38,7 @@ class ChangeMoneyService {
     }
 
     public ChangeMoneyResponse changeMoney() {
+        this.service.setToken(this.token);
         try {
             log.info("Usuario que realizó el consumo: " + SecurityUtils.decryptToken(this.token));
             Money originMoney = this.getMoney(this.request.getOriginCurrency());
@@ -54,9 +56,10 @@ class ChangeMoneyService {
             boolean flag = relations.getId().startsWith(originMoney.getIso());
             BigDecimal amount = response.getOriginAmount().multiply(flag ? relations.getPriceA() : relations.getPriceB());
             response.setValue(destinyMoney.getSymbol() + " " + amount);
+            this.service.saveAuditory(null, "Cambio realizado", true);
             return response;
         } catch (Exception e) {
-            //GUARDAR ERROR Y CONSUMO
+            this.service.saveAuditory(e.getMessage(), null, false);
             throw new RuntimeException(e.getMessage());
         }
     }
