@@ -27,6 +27,9 @@ class Money {
     private String iso;
     @Column(unique = true)
     private String country;
+    @Column(unique = true)
+    private String symbol;
+
 
     public Money() {
         this.id = UUID.randomUUID().toString();
