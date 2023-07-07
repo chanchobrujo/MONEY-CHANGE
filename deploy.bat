@@ -1,0 +1,1 @@
+start java -jar target/api-money-change.jar

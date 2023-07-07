@@ -1,0 +1,73 @@
+{
+	"info": {
+		"_postman_id": "dc610c5b-c828-48bc-b80a-b21e643c64b2",
+		"name": "Interbank test",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "13762835"
+	},
+	"item": [
+		{
+			"name": "change money",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJVU0VSXzEifQ.x7N-Fr7lZZ4T8vaimr7kwH9Q-g20C3Em8K7gFLuB61k",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"originAmount\": 123.56,\r\n    \"originCurrency\": \"EUR\",\r\n    \"destinationCurrency\": \"PEN\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/change-money",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"change-money"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Retrieve currency",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"originAmount\": 123.56,\n    \"originCurrency\": \"EUR\",\n    \"destinationCurrency\": \"PEN\"\n}"
+				},
+				"url": {
+					"raw": "localhost:8080/available-currencies",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"available-currencies"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
